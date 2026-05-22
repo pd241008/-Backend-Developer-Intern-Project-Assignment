@@ -56,8 +56,6 @@ function runCommand(command: string, cwd: string) {
 export async function run() {
   const args = process.argv.slice(2);
 
-
-
   const { projectName, language } = await inquirer.prompt([
     {
       type: "input",
@@ -184,10 +182,7 @@ async function createProject(projectName: string, language: "ts" | "js") {
 
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
 
-    await runCommand(
-      "npm install express cors dotenv morgan zod --no-fund --no-audit",
-      root,
-    );
+    await runCommand("npm install express cors dotenv morgan zod --no-fund --no-audit", root);
 
     await runCommand("npm install -D nodemon --no-fund --no-audit", root);
 
