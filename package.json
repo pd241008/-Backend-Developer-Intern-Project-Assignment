@@ -37,10 +37,10 @@
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.0",
-    "@types/inquirer": "^9.0.7",
+    "@types/inquirer": "^9.0.9",
     "@types/jest": "^30.0.0",
     "@types/morgan": "^1.9.10",
-    "@types/node": "^22.0.0",
+    "@types/node": "^22.19.19",
     "@types/supertest": "^7.2.0",
     "@types/three": "^0.184.0",
     "cors": "^2.8.6",
