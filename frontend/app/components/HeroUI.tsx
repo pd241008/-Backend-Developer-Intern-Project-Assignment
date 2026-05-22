@@ -2,8 +2,9 @@
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { BookOpen, TerminalSquare, Users, Blocks, Gauge } from "lucide-react";
+import Link from "next/link";
 
-function TiltCard({ children, className = "", style = {} }: { children: React.ReactNode, className?: string, style?: React.CSSProperties }) {
+function TiltCard({ children, className = "", style = {}, href }: { children: React.ReactNode, className?: string, style?: React.CSSProperties, href?: string }) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -30,18 +31,23 @@ function TiltCard({ children, className = "", style = {} }: { children: React.Re
     y.set(0);
   };
 
-  return (
+  const content = (
     <motion.div
       style={{ rotateX, rotateY, transformStyle: "preserve-3d", ...style }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`absolute rounded-3xl bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:bg-white/50 transition-colors duration-300 ${className}`}
+      className={`absolute rounded-3xl bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:bg-white/50 transition-colors duration-300 cursor-pointer ${className}`}
     >
       <div style={{ transform: "translateZ(30px)" }} className="h-full w-full p-6 flex flex-col">
         {children}
       </div>
     </motion.div>
   );
+
+  if (href) {
+    return <Link href={href} legacyBehavior passHref>{content}</Link>;
+  }
+  return content;
 }
 
 // Geometric flower logo for the center card
@@ -91,7 +97,7 @@ export default function HeroUI() {
 
         {/* Floating Cards */}
         {/* Card 1: Getting Started Guide */}
-        <TiltCard style={{ left: '8%', top: '22%', width: '220px', height: '220px' }} className="items-center justify-center text-center">
+        <TiltCard href="/docs" style={{ left: '8%', top: '22%', width: '220px', height: '220px' }} className="items-center justify-center text-center">
           <div className="w-14 h-14 bg-gradient-to-br from-[#f28e2c] to-[#d9482b] rounded-xl flex items-center justify-center text-white mb-6 shadow-lg shadow-orange-500/30">
             <BookOpen size={28} strokeWidth={2.5} />
           </div>
@@ -99,7 +105,7 @@ export default function HeroUI() {
         </TiltCard>
 
         {/* Card 2: Reference API */}
-        <TiltCard style={{ left: '26%', top: '38%', width: '240px', height: '240px' }} className="items-center text-center">
+        <TiltCard href="/docs" style={{ left: '26%', top: '38%', width: '240px', height: '240px' }} className="items-center text-center">
           <div className="w-14 h-14 bg-gradient-to-br from-[#f28e2c] to-[#d9482b] rounded-xl flex items-center justify-center text-white mb-4 shadow-lg shadow-orange-500/30">
             <TerminalSquare size={28} strokeWidth={2.5} />
           </div>
@@ -119,8 +125,8 @@ export default function HeroUI() {
         </TiltCard>
 
         {/* Card 4: Center Exp-Auth */}
-        <TiltCard style={{ left: '50%', top: '15%', transform: 'translateX(-50%)', width: '380px', height: '420px', backgroundColor: 'rgba(255, 255, 255, 0.25)' }} className="items-center text-center border-white/40 shadow-[0_30px_60px_rgba(0,0,0,0.1)]">
-          <h3 className="text-xl font-semibold text-gray-800 mt-2">Exp-Auth</h3>
+        <TiltCard href="/playground" style={{ left: '50%', top: '15%', transform: 'translateX(-50%)', width: '380px', height: '420px', backgroundColor: 'rgba(255, 255, 255, 0.25)' }} className="items-center text-center border-white/40 shadow-[0_30px_60px_rgba(0,0,0,0.1)]">
+          <h3 className="text-xl font-semibold text-gray-800 mt-2">Try Playground</h3>
           <CenterLogo />
           <div className="mt-auto bg-black/5 p-4 rounded-xl backdrop-blur-sm w-full">
             <p className="text-sm font-medium text-gray-800">The Complete 3D Documentation for<br/>Expresskit. Build Smarter.</p>
@@ -137,15 +143,15 @@ export default function HeroUI() {
         </TiltCard>
 
         {/* Card 6: Modules Overview */}
-        <TiltCard style={{ right: '12%', bottom: '28%', width: '300px', height: '180px' }}>
+        <TiltCard href="/playground" style={{ right: '12%', bottom: '28%', width: '300px', height: '180px' }}>
           <div className="flex items-center gap-4 mb-4">
             <div className="w-12 h-12 bg-gradient-to-br from-[#f28e2c] to-[#d9482b] rounded-xl flex items-center justify-center text-white shadow-lg shadow-orange-500/30">
               <Blocks size={24} />
             </div>
-            <h3 className="text-xl font-bold text-gray-900">Modules Overview</h3>
+            <h3 className="text-xl font-bold text-gray-900">Sandbox Env</h3>
           </div>
           <p className="text-xs text-gray-600 leading-relaxed">
-            Modular API Integration. Perfect<br/>State. Real-Time Webhooks.<br/>Dedicated support.
+            Test routing and middleware.<br/>Interactive Playground.<br/>Code directly in browser.
           </p>
         </TiltCard>
 
