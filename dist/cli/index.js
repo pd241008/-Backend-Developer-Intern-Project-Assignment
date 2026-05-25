@@ -1,46 +1,25 @@
 #!/usr/bin/env node
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const init_1 = require("./init");
-const sync_1 = require("./sync");
-const args = process.argv.slice(2);
-/* ----------------------------------
-   Safety Net (UX Guard)
------------------------------------ */
-if (args.length === 0) {
-    console.log(`
-🚀 ExpressKit – Express.js Project Generator
-
-This is a CLI tool and must be run with a command.
-
-👉 To get started, run:
-
-  npx @pd241008/expresskit init
-
-or (recommended):
-
-  npm create expresskit
-
-👉 To regenerate bridge files (if missing after cloning):
-
-  npx @pd241008/expresskit sync
-
-Optional global install:
-
-  npm install -g @pd241008/expresskit
-  expresskit init
-`);
-    process.exit(0);
-}
-const command = args[0];
-if (command === "init") {
-    (0, init_1.run)();
-}
-else if (command === "sync" || command === "build-bridge") {
-    (0, sync_1.run)();
-}
-else {
-    console.error(`❌ Unknown command: ${command}`);
-    console.log(`Available commands: init, sync`);
+const child_process_1 = require("child_process");
+const path_1 = __importDefault(require("path"));
+const fs_1 = __importDefault(require("fs"));
+// Determine the path to the downloaded Rust binary
+const finalBinaryName = process.platform === "win32" ? "packager.exe" : "packager";
+const binaryPath = path_1.default.resolve(__dirname, "../../bin", finalBinaryName);
+if (!fs_1.default.existsSync(binaryPath)) {
+    console.error("❌ Packager binary not found.");
+    console.error("Please ensure the postinstall script successfully downloaded the binary or run 'npm run postinstall'.");
     process.exit(1);
 }
+// Forward all arguments to the Rust binary
+const args = process.argv.slice(2);
+const result = (0, child_process_1.spawnSync)(binaryPath, args, { stdio: "inherit" });
+if (result.error) {
+    console.error("❌ Failed to execute packager binary:", result.error.message);
+    process.exit(1);
+}
+process.exit(result.status ?? 0);
