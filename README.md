@@ -15,7 +15,7 @@
 
 It aims to do for backend development **what Next.js did for frontend**.
 
-Instead of starting every Express project by debating folder structures, configuring TypeScript, and wiring up boilerplate middleware, ExpressKit gives you a **structured, scalable foundation out of the box**.
+Instead of starting every Express project by debating folder structures, configuring TypeScript, and wiring up boilerplate middleware, ExpressKit gives you a **structured, scalable foundation out of the box**. It comes with a **blazing-fast Rust-powered CLI** to scaffold your projects instantly.
 
 > **Philosophy:** Express is unopinionated. ExpressKit is opinionated so you don't have to be.
 
@@ -120,6 +120,9 @@ my-project/
 ---
 
 ## 🛠️ Features
+
+### 🦀 Rust-Powered CLI
+ExpressKit's CLI (`expresskit-packager`) is written in Rust for maximum performance. When you run `npx @pd241008/expresskit init`, it downloads an optimized, pre-compiled native binary for your OS (Windows, macOS, or Linux), making project generation virtually instantaneous!
 
 ### TypeScript Native
 Built for type safety from day one. Full `tsconfig.json` pre-configured.
